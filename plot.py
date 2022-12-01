@@ -2,8 +2,6 @@ from dateutil import parser
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as mp
-
-#storage amount of squats per day
 monday = []
 tuesday = []
 wednesday = []
@@ -21,6 +19,8 @@ for i in range(len(df)):
     data = df.iloc[i]
     #get day number
     day = parser.parse(data[0]).isoweekday()
+    #print(day)
+    #print(day)
     #get data
     amount = int(data[1])
 
@@ -54,13 +54,16 @@ data = {
 
 #create list with standard deviation per day
 stdev = [np.std(monday), np.std(tuesday), np.std(wednesday), np.std(thursday), np.std(friday), np.std(saturday), np.std(sunday)]
-
+days = list(data.keys())
+mean = list(data.values())
+print(mean)
+print(stdev)
 #initialise plot
 f = mp.figure(figsize = (15, 5))
 #add data to the plot
-mp.bar(list(data.keys()), list(data.values()))
+mp.bar(days, mean)
 #add errorbars
-mp.errorbar(list(data.keys()), list(data.values()), yerr=stdev, fmt='None', ecolor='black')
+mp.errorbar(days, mean, yerr=stdev, fmt='.', ecolor='black')
 mp.xlabel('days')
 mp.ylabel('mean number of squats')
 mp.title('mean number of squats per day')
